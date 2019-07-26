@@ -1,6 +1,7 @@
+import sys
 import socket
 import subprocess
-
+import time
 from ..backend import Backend
 from ..exceptions import BackendError, DeviceError
 from ..device import DS4Device
@@ -82,7 +83,6 @@ class BluetoothDS4Device(DS4Device):
 
 class BluetoothBackend(Backend):
     __name__ = "bluetooth"
-
     def setup(self):
         """Check if the bluetooth controller is available."""
         try:
@@ -144,7 +144,6 @@ class BluetoothBackend(Backend):
             except BackendError as err:
                 self.logger.error("Error while scanning for devices: {0}",
                                   err)
-                return
             except DeviceError as err:
                 self.logger.error("Unable to connect to detected device: {0}",
                                   err)
