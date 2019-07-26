@@ -109,8 +109,15 @@ class BluetoothBackend(Backend):
         devices = []
         res = res.splitlines()[1:]
         for _, bdaddr, name in map(lambda l: l.split(b"\t"), res):
-            devices.append((bdaddr.decode("utf8"), name.decode("utf8")))
-
+            decode1 = None
+            decode2 = None
+            try:
+                decode1 = bdaddr.decode("utf8")
+                decode2 = name.decode("utf8")
+            except subprocess.CalledProcessError:
+                raise BackendError("UnicodeDecodeError")
+            print("decode2 :  ", decode2)
+            devices.append((decode1, decode2))
         return devices
 
     def find_device(self):
