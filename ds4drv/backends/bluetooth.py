@@ -114,9 +114,8 @@ class BluetoothBackend(Backend):
             try:
                 decode1 = bdaddr.decode("utf8")
                 decode2 = name.decode("utf8")
-            except subprocess.CalledProcessError:
+            except UnicodeDecodeError:
                 raise BackendError("UnicodeDecodeError")
-            print("decode2 :  ", decode2)
             devices.append((decode1, decode2))
         return devices
 
